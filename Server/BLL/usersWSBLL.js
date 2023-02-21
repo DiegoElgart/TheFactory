@@ -32,9 +32,19 @@ const getUserByEmailAndUsername = async (username, email) => {
     return false;
 };
 
+// const updateMaxActionsInDB = async id => {
+//     const user = await User.findById(id);
+//     user.numOfActions = user.numOfActions - 1;
+//     const result = await user.save();
+//     console.log(result);
+// };
 // For Injecting to DB
 // const insertMany = async arr => {
 //     const result = await User.insertMany(arr);
 //     return result;
 // };
-module.exports = { getAllUsers, getUserByEmailAndUsername };
+module.exports = {
+    getAllUsers,
+    getUserByEmailAndUsername,
+    // updateMaxActionsInDB,
+};

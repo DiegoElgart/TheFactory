@@ -32,7 +32,7 @@ router.route("/actionsUpdate").get(async (req, res) => {
 // router.route("/insertMany").post(async (req, res) => {
 //     const users = req.body;
 //     console.log(users);
-//     const result = await usersBLL.insertMany(users);
+//     const result = await usersWSBLL.insertMany(users);
 //     res.json(result);
 // });
 
