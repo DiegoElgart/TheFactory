@@ -44,13 +44,14 @@ const checkMaxActionsById = async id => {
         if (actionsByDate[len].actionAllowed > 1) {
             return actionsByDate[len].actionAllowed;
         }
-        return "No More Actions for today";
+        return 0;
     }
     return "No More Actions for today";
 };
 
-const updateMaxActions = async id => {
+const updateMaxActions = async (req, res, next) => {
     const date = dateUtil.getDate();
+    const id = sessionStorage["id"];
     const actions = await getActionsById(id);
     const actionsByDate = actions.filter(action => action.date === date);
     const len = actionsByDate.length - 1;

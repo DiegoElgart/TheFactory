@@ -17,13 +17,12 @@ router.route("/login").post(async (req, res) => {
         const userId = user.id;
         const ACCESS_SECRET_TOKEN = process.env.SECRET_KEY;
         const accessToken = jwt.sign({ id: userId }, ACCESS_SECRET_TOKEN);
-        const actions = await actionsBLL.checkMaxActionsById(userId.toString());
-        console.log(actions);
+        //const actions = await actionsBLL.checkMaxActionsById(userId.toString());
         actionsBLL.addAction({
             id: userId,
             maxActions: user.numOfActions,
             date: dateSetter.getDate(),
-            actionAllowed: user.numOfActions,
+            actionAllowed: user.actionAllowed,
         });
         res.json({ accessToken, user });
     } else {
