@@ -22,7 +22,7 @@ router.route("/login").post(async (req, res) => {
             id: userId,
             maxActions: user.numOfActions,
             date: dateSetter.getDate(),
-            actionAllowed: user.actionAllowed,
+            actionAllowed: user.numOfActions,
         });
         res.json({ accessToken, user });
     } else {
