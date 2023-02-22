@@ -1,6 +1,7 @@
 const express = require("express");
 const usersWSBLL = require("../BLL/usersWSBLL");
 const actionsBLL = require("../BLL/actionsBLL");
+const departmentBLL = require("../BLL/departmentBLL");
 
 const router = express.Router();
 
@@ -9,6 +10,15 @@ router.route("/").get(async (req, res) => {
 
     res.json(users);
 });
+
+/*
+TEST FOR DEPARTMENT -- BORRA DESP DE PROBAR
+
+
+router.route("/dep").get(async (req, res) => {
+    const department = req.body;
+});
+*/
 
 router.route("/actions").get(async (req, res) => {
     const { id } = req.body;
