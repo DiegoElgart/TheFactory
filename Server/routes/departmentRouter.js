@@ -1,5 +1,7 @@
+const express = require("express");
 const departmentBLL = require("../BLL/departmentBLL");
 
+const router = express.Router();
 router.route("/dep").post(async (req, res) => {
     try {
         const department = req.body;

@@ -29,10 +29,17 @@
             "actionAllowed": 5
         },
         {
-            "id": "63f46dcafbbb2c320ca04004",
+            "id": "63ea30d7f4ee367193dfc64a",
             "maxActions": 5,
             "date": "23/2/2023",
             "actionAllowed": 5
+        },
+
+        {
+            "id": "63ea30d7f4ee367193dfc64a",
+            "maxActions": 5,
+            "date": "23/2/2023",
+            "actionAllowed": 4
         }
     ]
 }

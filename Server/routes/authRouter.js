@@ -24,6 +24,8 @@ router.route("/login").post(async (req, res) => {
             date: dateSetter.getDate(),
             actionAllowed: user.numOfActions,
         });
+        res.header("access-Token", accessToken);
+        res.cookie("id", user.id, { httpOnly: true });
         res.json({ accessToken, user });
     } else {
         res.status(401).json("Wrong Email or Username");
