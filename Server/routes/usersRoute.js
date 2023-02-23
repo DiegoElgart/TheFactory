@@ -1,7 +1,5 @@
 const express = require("express");
 const usersWSBLL = require("../BLL/usersWSBLL");
-const actionsBLL = require("../BLL/actionsBLL");
-const departmentBLL = require("../BLL/departmentBLL");
 
 const router = express.Router();
 
@@ -11,32 +9,8 @@ router.route("/").get(async (req, res) => {
     res.json(users);
 });
 
-/*
-TEST FOR DEPARTMENT -- BORRA DESP DE PROBAR
 
 
-router.route("/dep").get(async (req, res) => {
-    const department = req.body;
-});
-*/
-
-router.route("/actions").get(async (req, res) => {
-    const { id } = req.body;
-    const actions = await actionsBLL.getActionsById(id);
-    res.json(actions);
-});
-
-router.route("/actionsByID").get(async (req, res) => {
-    const { id } = req.body;
-    const actions = await actionsBLL.checkMaxActionsById(id);
-    res.json(actions);
-});
-
-router.route("/actionsUpdate").get(async (req, res) => {
-    const { id } = req.body;
-    const actions = await actionsBLL.updateMaxActions(id);
-    res.json(actions);
-});
 
 // Route for injecting to DB
 // router.route("/insertMany").post(async (req, res) => {
