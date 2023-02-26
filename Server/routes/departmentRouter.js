@@ -26,7 +26,7 @@ router.route("/:id").post(async (req, res) => {
     res.json(result);
 });
 
-router.route("/:id").post(async (req, res) => {
+router.route("/delete/:id").post(async (req, res) => {
     const { id } = req.params;
     const result = await departmentBLL.deleteDepartment(id);
     res.json(result);

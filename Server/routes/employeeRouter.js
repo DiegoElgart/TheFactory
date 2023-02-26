@@ -19,6 +19,15 @@ router.route("/add").post(async (req, res) => {
     const result = await employeeBLL.addEmployee(department);
     res.json(result);
 });
+
+// Route for injecting to DB
+// router.route("/insertMany").post(async (req, res) => {
+//     const users = req.body;
+//     //console.log(users);
+//     const result = await employeeBLL.insertMany(users);
+//     res.json(result);
+// });
+
 router.route("/:id").post(async (req, res) => {
     const obj = req.body;
     const { id } = req.params;
@@ -26,17 +35,9 @@ router.route("/:id").post(async (req, res) => {
     res.json(result);
 });
 
-router.route("/:id").post(async (req, res) => {
+router.route("/delete/:id").post(async (req, res) => {
     const { id } = req.params;
     const result = await employeeBLL.deleteEmployee(id);
-    res.json(result);
-});
-
-// Route for injecting to DB
-router.route("/insertMany").post(async (req, res) => {
-    const users = req.body;
-    //console.log(users);
-    const result = await employeeBLL.insertMany(users);
     res.json(result);
 });
 

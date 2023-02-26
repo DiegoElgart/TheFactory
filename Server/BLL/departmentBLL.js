@@ -25,15 +25,15 @@ const deleteDepartment = async id => {
 };
 
 // For Injecting to DB
-const insertMany = async arr => {
-    const result = await Department.insertMany(arr);
-    return result;
-};
+// const insertMany = async arr => {
+//     const result = await Department.insertMany(arr);
+//     return result;
+// };
 module.exports = {
     getAllDepartments,
     addDepartment,
     getDepartmentById,
     updateDepartment,
     deleteDepartment,
-    insertMany,
+    // insertMany,
 };

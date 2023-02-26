@@ -23,11 +23,15 @@ const deleteEmployee = async id => {
     await Employee.findByIdAndDelete(id);
     return "Employee Deleted";
 };
-
+// const insertMany = async arr => {
+//     const result = await Employee.insertMany(arr);
+//     return result;
+// };
 module.exports = {
     getAllEmployees,
     getEmployeeById,
     addEmployee,
     updateEmployee,
     deleteEmployee,
+    // insertMany,
 };

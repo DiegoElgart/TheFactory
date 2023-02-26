@@ -6,6 +6,7 @@ const authRouter = require("./routes/authRouter");
 const usersRouter = require("./routes/usersRoute");
 const departmentRouter = require("./routes/departmentRouter");
 const employeeRouter = require("./routes/employeeRouter");
+const shiftRouter = require("./routes/shiftRouter");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./configs/db");
 
@@ -25,6 +26,7 @@ app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/employee", employeeRouter);
 app.use("/dept", departmentRouter);
+app.use("/shift", shiftRouter);
 
 app.listen(port, () =>
     console.log(`App listening at http://localhost:${port}`)

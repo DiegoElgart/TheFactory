@@ -23,11 +23,15 @@ const deleteShift = async id => {
     await Shift.findByIdAndDelete(id);
     return "Shift Deleted";
 };
-
+const insertMany = async arr => {
+    const result = await Shift.insertMany(arr);
+    return result;
+};
 module.exports = {
     getAllShifts,
     getShiftById,
     addShift,
     updateShift,
     deleteShift,
+    insertMany,
 };
