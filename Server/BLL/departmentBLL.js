@@ -1,4 +1,5 @@
 const Department = require("../models/departmentModel");
+const Employee = require('../models/employeeModel')
 
 const getAllDepartments = () => {
     return Department.find({});
@@ -23,6 +24,10 @@ const deleteDepartment = async id => {
     await Department.findByIdAndDelete(id);
     return "Department Deleted";
 };
+
+const getEmployeesByDept = async id=>{
+await 
+}
 
 // For Injecting to DB
 // const insertMany = async arr => {

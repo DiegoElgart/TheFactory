@@ -21,12 +21,12 @@ router.route("/add").post(async (req, res) => {
 });
 
 // Route for injecting to DB
-router.route("/insertMany").post(async (req, res) => {
-    const users = req.body;
-    //console.log(users);
-    const result = await shiftBLL.insertMany(users);
-    res.json(result);
-});
+// router.route("/insertMany").post(async (req, res) => {
+//     const users = req.body;
+//     //console.log(users);
+//     const result = await shiftBLL.insertMany(users);
+//     res.json(result);
+// });
 
 router.route("/:id").post(async (req, res) => {
     const obj = req.body;

@@ -8,6 +8,13 @@ const departmentSchema = new mongoose.Schema(
             ref: "User",
             required: false,
         },
+        employeesList: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Employee",
+                required: false,
+            },
+        ],
     },
     { versionKey: false }
 );
