@@ -1,5 +1,5 @@
 const Department = require("../models/departmentModel");
-const Employee = require('../models/employeeModel')
+const Employee = require("../models/employeeModel");
 
 const getAllDepartments = () => {
     return Department.find({});
@@ -25,20 +25,20 @@ const deleteDepartment = async id => {
     return "Department Deleted";
 };
 
-const getEmployeesByDept = async id=>{
-await 
-}
+// const getEmployeesByDept = async id=>{
+// await
+// }
 
 // For Injecting to DB
-// const insertMany = async arr => {
-//     const result = await Department.insertMany(arr);
-//     return result;
-// };
+const insertMany = async arr => {
+    const result = await Department.insertMany(arr);
+    return result;
+};
 module.exports = {
     getAllDepartments,
     addDepartment,
     getDepartmentById,
     updateDepartment,
     deleteDepartment,
-    // insertMany,
+    insertMany,
 };

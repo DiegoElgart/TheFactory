@@ -10,6 +10,13 @@ const employeeSchema = new mongoose.Schema(
             ref: "Department",
             required: false,
         },
+        shifts: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Shifts",
+                required: false,
+            },
+        ],
     },
     { versionKey: false }
 );

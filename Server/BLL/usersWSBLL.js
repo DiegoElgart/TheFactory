@@ -39,12 +39,13 @@ const getUserByEmailAndUsername = async (username, email) => {
 //     console.log(result);
 // };
 // For Injecting to DB
-// const insertMany = async arr => {
-//     const result = await User.insertMany(arr);
-//     return result;
-// };
+const insertMany = async arr => {
+    const result = await User.insertMany(arr);
+    return result;
+};
 module.exports = {
     getAllUsers,
     getUserByEmailAndUsername,
+    insertMany,
     // updateMaxActionsInDB,
 };
