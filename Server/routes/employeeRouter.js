@@ -1,5 +1,6 @@
 const express = require("express");
 const employeeBLL = require("../BLL/employeeBLL");
+const shiftBLL = require("../BLL/shiftBLL");
 
 const router = express.Router();
 // Route for injecting to DB
@@ -15,21 +16,20 @@ router.route("/").get(async (req, res) => {
     res.json(employees);
 });
 
-router.route("/dept/:id").get(async (req, res) => {
+router.route("/:id/dept").get(async (req, res) => {
     const { id } = req.params;
     const employees = await employeeBLL.getEmployeeByDept(id);
     res.json(employees);
 });
-
+router.route("/:id/shifts").get(async (req, res) => {
+    const { id } = req.params;
+    const shift = await shiftBLL.getShiftsByEmployeeId(id);
+    res.json(shift);
+});
 router.route("/:id").get(async (req, res) => {
     const { id } = req.params;
     const employee = await employeeBLL.getEmployeeById(id);
     //const employee = await employeeBLL.getEmployeeShifts(id);
-    res.json(employee);
-});
-router.route("/shifts/:id").get(async (req, res) => {
-    const { id } = req.params;
-    const employee = await employeeBLL.getEmployeeShifts(id);
     res.json(employee);
 });
 

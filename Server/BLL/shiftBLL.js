@@ -1,5 +1,5 @@
 const Shift = require("../models/ShiftModel");
-
+const Employee = require("../models/employeeModel");
 const getAllShifts = () => {
     return Shift.find({});
 };
@@ -27,6 +27,15 @@ const insertMany = async arr => {
     const result = await Shift.insertMany(arr);
     return result;
 };
+
+const getShiftsByEmployeeId = async employeeId => {
+    const employee = await Employee.findById(employeeId);
+    if (!employee) {
+        throw new Error("Non Employee encounterd");
+    }
+    const shifts = await Shift.find({ employeesList: [employeeId] });
+    return shifts;
+};
 module.exports = {
     getAllShifts,
     getShiftById,
@@ -34,4 +43,5 @@ module.exports = {
     updateShift,
     deleteShift,
     insertMany,
+    getShiftsByEmployeeId,
 };

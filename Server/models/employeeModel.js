@@ -21,6 +21,6 @@ const employeeSchema = new mongoose.Schema(
     { versionKey: false }
 );
 
-const Employee = mongoose.model("employee", employeeSchema);
+const Employee = mongoose.model("Employee", employeeSchema);
 
 module.exports = Employee;

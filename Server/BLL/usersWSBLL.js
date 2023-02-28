@@ -1,17 +1,25 @@
 const usersWS = require("../DAL/usersWS");
 const User = require("../models/userModel");
+const actionsBLL = require("../BLL/actionsBLL");
 
 const getAllUsers = async () => {
     let { data: users } = await usersWS.getAllUsers();
 
-    users = users.map(user => {
-        return {
-            fullName: user.name,
-            username: user.username,
-            email: user.email,
-        };
-    });
-    return users;
+    const updatedUsers = await Promise.all(
+        users.map(async user => {
+            const userDB = await User.findOne({ fullName: user.name });
+            const actions = await actionsBLL.getActionsById(userDB._id);
+            return {
+                id: userDB._id,
+                fullName: userDB.name,
+                username: user.username,
+                email: user.email,
+                actionAllowed: actions,
+            };
+        })
+    );
+
+    return updatedUsers;
 };
 
 const getUserByEmailAndUsername = async (username, email) => {
@@ -20,7 +28,7 @@ const getUserByEmailAndUsername = async (username, email) => {
         user => user.email === email && user.username === username
     );
     if (user) {
-        const userDB = await User.findOne({ fullName: user.fullName });
+        const userDB = await User.findOne({ fullName: user.name });
         return {
             id: userDB._id,
             username: user.username,
