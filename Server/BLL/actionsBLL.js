@@ -10,6 +10,12 @@ const getActionsById = async id => {
     const actions = await getAllActions();
     return actions.filter(action => action.id === id);
 };
+const getActionsByIdAndDate = async id => {
+    const date = dateUtil.getDate();
+    const actions = await getAllActions();
+    const actionsByDate = actions.filter(action => action.date === date);
+    return actionsByDate;
+};
 
 const addAction = async obj => {
     const actions = await getAllActions();
@@ -64,4 +70,5 @@ module.exports = {
     updateAction,
     checkMaxActionsById,
     updateMaxActions,
+    getActionsByIdAndDate,
 };

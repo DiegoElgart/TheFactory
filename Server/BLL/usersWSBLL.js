@@ -8,13 +8,22 @@ const getAllUsers = async () => {
     const updatedUsers = await Promise.all(
         users.map(async user => {
             const userDB = await User.findOne({ fullName: user.name });
-            const actions = await actionsBLL.getActionsById(userDB._id);
+            const actions = await actionsBLL.getActionsByIdAndDate(
+                userDB._id.toString()
+            );
+
+            const todayActions = actions.find(
+                action => action.id === userDB._id.toString()
+            );
+
             return {
                 id: userDB._id,
                 fullName: userDB.name,
                 username: user.username,
                 email: user.email,
-                actionAllowed: actions,
+                actionAllowed: todayActions
+                    ? todayActions.actionAllowed
+                    : userDB.numOfActions,
             };
         })
     );
