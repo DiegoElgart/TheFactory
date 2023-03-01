@@ -5,30 +5,14 @@ const actionsBLL = require("../BLL/actionsBLL");
 const getAllUsers = async () => {
     let { data: users } = await usersWS.getAllUsers();
 
-    const updatedUsers = await Promise.all(
-        users.map(async user => {
-            const userDB = await User.findOne({ fullName: user.name });
-            const actions = await actionsBLL.getActionsByIdAndDate(
-                userDB._id.toString()
-            );
-
-            const todayActions = actions.find(
-                action => action.id === userDB._id.toString()
-            );
-
-            return {
-                id: userDB._id,
-                fullName: userDB.name,
-                username: user.username,
-                email: user.email,
-                actionAllowed: todayActions
-                    ? todayActions.actionAllowed
-                    : userDB.numOfActions,
-            };
-        })
-    );
-
-    return updatedUsers;
+    users = users.map(user => {
+        return {
+            fullName: user.name,
+            username: user.username,
+            email: user.email,
+        };
+    });
+    return users;
 };
 
 const getUserByEmailAndUsername = async (username, email) => {
@@ -37,7 +21,11 @@ const getUserByEmailAndUsername = async (username, email) => {
         user => user.email === email && user.username === username
     );
     if (user) {
-        const userDB = await User.findOne({ fullName: user.name });
+        const userDB = await User.findOne({ fullName: user.fullName });
+        const actions = await actionsBLL.getActionsByIdAndDate(
+            userDB._id.toString()
+        );
+
         return {
             id: userDB._id,
             username: user.username,

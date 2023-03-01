@@ -13,8 +13,11 @@ const getActionsById = async id => {
 const getActionsByIdAndDate = async id => {
     const date = dateUtil.getDate();
     const actions = await getAllActions();
-    const actionsByDate = actions.filter(action => action.date === date);
-    return actionsByDate;
+    const actionsById = actions.filter(action => action.id === id);
+    const actionsByDate = actionsById.filter(action => action.date === date);
+    console.log(actionsByDate);
+
+    // return actionsByDate;
 };
 
 const addAction = async obj => {
@@ -28,7 +31,6 @@ const addAction = async obj => {
 const updateAction = async (id, obj) => {
     const actions = await getAllActions();
     const index = actions.findIndex(action => action.id === id);
-    console.log(index);
     if (index !== -1) {
         action[index] = obj;
         const data = { actions };

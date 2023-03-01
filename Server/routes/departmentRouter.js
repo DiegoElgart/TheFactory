@@ -6,7 +6,6 @@ const router = express.Router();
 // Route for injecting to DB
 router.route("/insertMany").post(async (req, res) => {
     const users = req.body;
-    console.log(users);
     const result = await departmentBLL.insertMany(users);
     res.json(result);
 });

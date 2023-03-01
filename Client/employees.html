@@ -1,0 +1,16 @@
+<html>
+
+    <body>
+        <h1>Employees Page</h1>
+    </body>
+    <script>
+        const url = 'http://localhost:4000/employee'
+        async function getEmployees() {
+            const resp = await fetch(url)
+            const employees = await resp.json()
+            console.log(employees)
+        }
+        getEmployees()
+    </script>
+
+</html>
