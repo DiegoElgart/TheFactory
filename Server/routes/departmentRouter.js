@@ -22,6 +22,12 @@ router.route("/:id").get(async (req, res) => {
     res.json(dept);
 });
 
+router.route("/:id/employees").get(async (req, res) => {
+    const { id } = req.params;
+    const employees = await departmentBLL.getEmployeesNotInDepartment(id);
+    res.json(employees);
+});
+
 router.route("/add").post(async (req, res) => {
     const department = req.body;
     const result = await departmentBLL.addDepartment(department);

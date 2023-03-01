@@ -25,9 +25,21 @@ const deleteDepartment = async id => {
     return "Department Deleted";
 };
 
-// const getEmployeesByDept = async id=>{
-// await
-// }
+const getEmployeesNotInDepartment = async departmentId => {
+    try {
+        // const department = await Department.findById(departmentId).populate(
+        //     "employeesList"
+        // );
+        const allEmployees = await Employee.find();
+        const employeesNotInDepartment = allEmployees.filter(
+            employee => employee.departmentID.toString() !== departmentId
+        );
+        return employeesNotInDepartment;
+    } catch (error) {
+        console.error(error);
+        throw new Error("Error getting employees not in department");
+    }
+};
 
 // For Injecting to DB
 const insertMany = async arr => {
@@ -41,4 +53,5 @@ module.exports = {
     updateDepartment,
     deleteDepartment,
     insertMany,
+    getEmployeesNotInDepartment,
 };
