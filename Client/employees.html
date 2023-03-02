@@ -1,16 +1,85 @@
 <html>
 
-    <body>
+    <body onload="getEmployees()">
+        <button onclick="addNewEmployee()">Add new employee</button>
         <h1>Employees Page</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Department</th>
+                    <th>Shifts</th>
+                </tr>
+            </thead>
+            <tbody id="employee-table"></tbody>
+        </table>
+        <script>
+            const employeeUrl = "http://localhost:4000/employee";
+            const departmentUrl = "http://localhost:4000/dept";
+            const shiftUrl = "http://localhost:4000/shift";
+
+            function formatTime(num) {
+                num = parseInt(num);
+                const hours = Math.floor(num / 100);
+                const minutes = num % 100;
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padEnd(2, '0')}`;
+            }
+
+
+
+            async function getDepartmentById(id) {
+                const data = await fetch(`${departmentUrl}/${id}`);
+                const dept = await data.json();
+                return dept;
+            }
+
+            async function getShiftById(id) {
+                const data = await fetch(`${shiftUrl}/${id}`);
+                const shift = await data.json();
+                return `${shift.start} - ${shift.end}`;
+            }
+
+            async function getEmployees() {
+                const resp = await fetch(employeeUrl);
+                const employees = await resp.json();
+                console.log(employees);
+                const tableBody = document.getElementById("employee-table");
+                for (const employee of employees) {
+                    const row = document.createElement("tr");
+                    const nameCell = document.createElement("td");
+                    const nameLink = document.createElement('a')
+                    nameLink.href = `editEmployee.html?id=${employee._id}`
+                    nameLink.innerHTML = `${employee.firstName} ${employee.lastName}`
+                    // nameCell.textContent = `${employee.firstName} ${employee.lastName}`;
+                    row.appendChild(nameLink);
+                    const dept = await getDepartmentById(employee.departmentID);
+                    const deptCell = document.createElement("td");
+                    deptCell.textContent = dept.name;
+                    row.appendChild(deptCell);
+                    const shifts = await Promise.all(
+                        employee.shifts.map(async (shift) =>
+                            shift ? await getShiftById(shift) : null
+                        )
+                    );
+
+                    const shiftsCell = document.createElement("td");
+                    shiftsCell.textContent = "";
+                    for (const shift of shifts) {
+                        if (shift) {
+                            const shiftElement = document.createElement("div");
+                            shiftElement.textContent = `${formatTime(shift)}`;
+                            shiftsCell.appendChild(shiftElement);
+                        }
+                    }
+                    row.appendChild(shiftsCell);
+                    tableBody.appendChild(row);
+                }
+            }
+            function addNewEmployee() {
+                window.location = './newEmployee.html'
+            }
+
+        </script>
     </body>
-    <script>
-        const url = 'http://localhost:4000/employee'
-        async function getEmployees() {
-            const resp = await fetch(url)
-            const employees = await resp.json()
-            console.log(employees)
-        }
-        getEmployees()
-    </script>
 
 </html>

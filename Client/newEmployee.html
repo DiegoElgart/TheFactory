@@ -1,0 +1,87 @@
+<html>
+
+    <head></head>
+
+    <body>
+        <div style="margin-top: 50px">
+            <h1>Add New Employee</h1>
+            <br />
+            <form action="#">
+                <div>
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" placeholder="First Name" />
+                </div>
+                <div>
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" placeholder="Last Name" />
+                </div>
+                <div>
+                    <label for="startWorkYear">Start Work Year</label>
+                    <input type="number" min="2000" max="2023" id="startWorkYear" placeholder="Year" />
+                </div>
+                <div>
+                    <label for="department">Department</label>
+                    <select id="department"></select>
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary" onclick="add(event)">
+                    Save
+                </button>
+            </form>
+            <button onclick="cancel()">Cancel</button>
+        </div>
+
+        <script>
+            const employeeUrl = "http://localhost:4000/employee";
+            const departmentUrl = "http://localhost:4000/dept";
+
+            function cancel() {
+                window.location = "./employees.html";
+            }
+
+            async function populateSelect() {
+                try {
+                    const resp = await fetch(departmentUrl);
+                    const options = await resp.json();
+                    const select = document.getElementById("department");
+                    for (const option of options) {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option._id;
+                        optionElement.textContent = option.name;
+                        select.appendChild(optionElement);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            populateSelect();
+
+            async function add(e) {
+                e.preventDefault();
+
+                const obj = {
+                    firstName: document.getElementById("fname").value,
+                    lastName: document.getElementById("lname").value,
+                    startWorkYear: document.getElementById("startWorkYear").value,
+                    departmentID: document.getElementById("department").value,
+                };
+
+                try {
+                    const resp = await fetch(`${employeeUrl}/add`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(obj),
+                    });
+
+                    const data = await resp.json();
+                    console.log(data);
+                    window.location = './employees.html'
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        </script>
+    </body>
+
+</html>

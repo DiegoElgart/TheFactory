@@ -1,0 +1,109 @@
+<html>
+
+    <head></head>
+
+    <body onload="loadData()">
+        <div style="margin-top: 50px">
+            <h1>Edit Employee</h1>
+            <br />
+            <form action="#">
+                <div>
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" placeholder="First Name" />
+                </div>
+                <div>
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" placeholder="Last Name" />
+                </div>
+                <div>
+                    <label for="startWorkYear">Start Work Year</label>
+                    <input type="number" min="2000" max="2023" id="startWorkYear" placeholder="Year" />
+                </div>
+                <div>
+                    <label for="department">Department</label>
+                    <select id="department"></select>
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary" onclick="update(event)">
+                    Save
+                </button>
+            </form>
+            <button onclick="cancel()">Cancel</button>
+        </div>
+
+        <script>
+            const employeeUrl = "http://localhost:4000/employee";
+            const shiftsUrl = "http://localhost:4000/shift";
+            const departmentUrl = "http://localhost:4000/dept";
+
+            function cancel() {
+                window.location = "./employees.html";
+            }
+            async function populateSelect() {
+                try {
+                    const resp = await fetch(departmentUrl);
+                    const options = await resp.json();
+                    const select = document.getElementById("department");
+                    for (const option of options) {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option._id;
+                        optionElement.textContent = option.name;
+                        select.appendChild(optionElement);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            populateSelect();
+            async function getDepartmentById(id) {
+                const data = await fetch(`${departmentUrl}/${id}`);
+                const dept = await data.json();
+                return dept;
+            }
+            const params = new URLSearchParams(location.search)
+            const employeeID = params.get('id')
+
+            async function loadData() {
+                const resp = await fetch(`${employeeUrl}/${employeeID}`)
+                const employee = await resp.json()
+                const department = await getDepartmentById(employee.departmentID)
+
+                document.getElementById('fname').value = employee.firstName
+                document.getElementById('lname').value = employee.lastName
+                document.getElementById('startWorkYear').value = employee.startWorkYear
+                document.getElementById('department').value = department._id
+
+            }
+
+            async function update(e) {
+                e.preventDefault();
+                const params = new URLSearchParams(location.search)
+                const employeeID = params.get('id')
+                console.log(employeeID)
+
+                const obj = {
+                    firstName: document.getElementById("fname").value,
+                    lastName: document.getElementById("lname").value,
+                    startWorkYear: document.getElementById("startWorkYear").value,
+                    departmentID: document.getElementById("department").value,
+                };
+
+                try {
+                    const resp = await fetch(`${employeeUrl}/${employeeID}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(obj),
+                    });
+
+                    const data = await resp.json();
+                    console.log(data);
+                    window.location = './employees.html'
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        </script>
+    </body>
+
+</html>

@@ -28,14 +28,14 @@ const getEmployeeShifts = async id => {
 
 const addEmployee = async obj => {
     const employee = new Employee(obj);
-    if (employee.departmentID) {
-        const department = await departmentBLL.getDepartmentById(
-            employee.departmentID
-        );
-        department.employeesList.push(employee._id);
-        await departmentBLL.updateDepartment(department._id);
-        department.save();
-    }
+    // if (employee.departmentID) {
+    //     const department = await departmentBLL.getDepartmentById(
+    //         employee.departmentID
+    //     );
+    //     department.employeesList.push(employee._id);
+    //     await departmentBLL.updateDepartment(department._id);
+    //     department.save();
+    // }
 
     await employee.save();
     return "Employee Created";
