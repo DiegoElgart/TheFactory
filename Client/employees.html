@@ -1,8 +1,15 @@
 <html>
 
-    <body onload="getEmployees()">
-        <button onclick="addNewEmployee()">Add new employee</button>
-        <h1>Employees Page</h1>
+    <body onload="getEmployees() ;showFullName() ;populateSelect()">
+        <button onclick="logout()">Log Out</button>
+        <h1 id="pageTitle">Employees Page</h1>
+        <div>
+            <label for="department">Department</label>
+            <select id="department">
+                <option value="none">--Filter By Department--</option>
+            </select>
+        </div>
+        <br />
         <table>
             <thead>
                 <tr>
@@ -13,44 +20,102 @@
             </thead>
             <tbody id="employee-table"></tbody>
         </table>
+        <button onclick="addNewEmployee()">Add new employee</button>
         <script>
             const employeeUrl = "http://localhost:4000/employee";
             const departmentUrl = "http://localhost:4000/dept";
             const shiftUrl = "http://localhost:4000/shift";
+            const options = {
+                headers: {
+                    "access-Token": sessionStorage.getItem('accessToken')
+                }
+            }
+            async function populateSelect() {
+                try {
+                    const resp = await fetch(departmentUrl, {
+                        headers: {
+                            "access-Token": sessionStorage.getItem('accessToken')
+                        }
+                    });
+                    const options = await resp.json();
+                    const select = document.getElementById("department");
+                    for (const option of options) {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option._id;
+                        optionElement.id = option.name
+                        optionElement.textContent = option.name;
+                        select.appendChild(optionElement);
+                    }
+                    // Add event listener to select element
+                    select.addEventListener('change', async () => {
+                        const tableBody = document.getElementById("employee-table");
+                        tableBody.innerHTML = ""; // Clear table
+                        await getEmployees();
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
 
-            function formatTime(num) {
+            function logout() {
+                sessionStorage.clear()
+                window.location = "login.html"
+            }
+            function showFullName() {
+                const pTitle = document.getElementById('pageTitle')
+                const fname = sessionStorage.getItem('fullName')
+                const pName = document.createElement('h6')
+                pName.innerText = fname
+                pTitle.appendChild(pName)
+            }
+
+            function formatTime(shift) {
+                const [start, end] = shift.split(" - ");
+                const formattedStart = formatTimeNumber(start);
+                const formattedEnd = formatTimeNumber(end);
+                return `${formattedStart} - ${formattedEnd}`;
+            }
+
+            function formatTimeNumber(num) {
                 num = parseInt(num);
                 const hours = Math.floor(num / 100);
                 const minutes = num % 100;
                 return `${hours.toString().padStart(2, '0')}:${minutes.toString().padEnd(2, '0')}`;
             }
-
+git 
 
 
             async function getDepartmentById(id) {
-                const data = await fetch(`${departmentUrl}/${id}`);
+                const data = await fetch(`${departmentUrl}/${id}`, options);
                 const dept = await data.json();
                 return dept;
             }
 
             async function getShiftById(id) {
-                const data = await fetch(`${shiftUrl}/${id}`);
+                const data = await fetch(`${shiftUrl}/${id}`, options);
                 const shift = await data.json();
                 return `${shift.start} - ${shift.end}`;
             }
 
             async function getEmployees() {
-                const resp = await fetch(employeeUrl);
-                const employees = await resp.json();
-                console.log(employees);
+                const resp = await fetch(employeeUrl, options);
+                const deptSelected = document.getElementById("department");
+                const deptSelectedIndex = deptSelected.selectedIndex;
+                const deptFilter = deptSelected.options[deptSelectedIndex];
+                let employees = await resp.json();
+
+                if (deptFilter.value !== "none") {
+                    employees = employees.filter((employee) => employee.departmentID === deptFilter.value);
+                }
+
                 const tableBody = document.getElementById("employee-table");
+                tableBody.innerHTML = ""; // clear the table before re-populating
                 for (const employee of employees) {
                     const row = document.createElement("tr");
                     const nameCell = document.createElement("td");
-                    const nameLink = document.createElement('a')
-                    nameLink.href = `editEmployee.html?id=${employee._id}`
-                    nameLink.innerHTML = `${employee.firstName} ${employee.lastName}`
-                    // nameCell.textContent = `${employee.firstName} ${employee.lastName}`;
+                    const nameLink = document.createElement("a");
+                    nameLink.href = `editEmployee.html?id=${employee._id}`;
+                    nameLink.innerHTML = `${employee.firstName} ${employee.lastName}`;
                     row.appendChild(nameLink);
                     const dept = await getDepartmentById(employee.departmentID);
                     const deptCell = document.createElement("td");
@@ -61,7 +126,6 @@
                             shift ? await getShiftById(shift) : null
                         )
                     );
-
                     const shiftsCell = document.createElement("td");
                     shiftsCell.textContent = "";
                     for (const shift of shifts) {
@@ -75,6 +139,7 @@
                     tableBody.appendChild(row);
                 }
             }
+
             function addNewEmployee() {
                 window.location = './newEmployee.html'
             }

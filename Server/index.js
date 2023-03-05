@@ -21,12 +21,10 @@ app.use(cookieParser());
 
 app.use("/auth", authRouter);
 //app.use(checkMaxActionsById);
-//app.use("/users", auth, usersRouter);
-
-app.use("/users", usersRouter);
-app.use("/employee", employeeRouter);
-app.use("/dept", departmentRouter);
-app.use("/shift", shiftRouter);
+app.use("/users", auth, usersRouter);
+app.use("/employee", auth, employeeRouter);
+app.use("/dept", auth, departmentRouter);
+app.use("/shift", auth, shiftRouter);
 
 app.listen(port, () =>
     console.log(`App listening at http://localhost:${port}`)

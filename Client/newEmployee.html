@@ -2,7 +2,7 @@
 
     <head></head>
 
-    <body>
+    <body onload="populateSelect()">
         <div style="margin-top: 50px">
             <h1>Add New Employee</h1>
             <br />
@@ -34,6 +34,11 @@
         <script>
             const employeeUrl = "http://localhost:4000/employee";
             const departmentUrl = "http://localhost:4000/dept";
+            const options = {
+                headers: {
+                    "access-Token": sessionStorage.getItem('accessToken')
+                }
+            }
 
             function cancel() {
                 window.location = "./employees.html";
@@ -41,7 +46,11 @@
 
             async function populateSelect() {
                 try {
-                    const resp = await fetch(departmentUrl);
+                    const resp = await fetch(departmentUrl, {
+                        headers: {
+                            "access-Token": sessionStorage.getItem('accessToken')
+                        }
+                    });
                     const options = await resp.json();
                     const select = document.getElementById("department");
                     for (const option of options) {
@@ -55,7 +64,7 @@
                 }
             }
 
-            populateSelect();
+
 
             async function add(e) {
                 e.preventDefault();
@@ -70,7 +79,7 @@
                 try {
                     const resp = await fetch(`${employeeUrl}/add`, {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
                         body: JSON.stringify(obj),
                     });
 

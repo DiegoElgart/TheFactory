@@ -2,9 +2,11 @@
 
     <head></head>
 
-    <body onload="loadData()">
-        <div style="margin-top: 50px">
-            <h1>Edit Employee</h1>
+    <body onload="loadData() ;showFullName()">
+        <button onclick="logout()">Log Out</button>
+
+        <div style="margin-top: 50px; width: 450px; float: left;">
+            <h1 id="pageTitle">Edit Employee</h1>
             <br />
             <form action="#">
                 <div>
@@ -29,20 +31,78 @@
                 </button>
             </form>
             <button onclick="cancel()">Cancel</button>
+            <button onclick="deleteEmployee()">Delete</button>
+
+        </div>
+        <div style="margin-top: 200px; width: 250px; float: left;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Shifts</th>
+                    </tr>
+                </thead>
+                <tbody id="shiftsBody"></tbody>
+            </table>
         </div>
 
         <script>
             const employeeUrl = "http://localhost:4000/employee";
             const shiftsUrl = "http://localhost:4000/shift";
             const departmentUrl = "http://localhost:4000/dept";
+            const options = {
+                headers: {
+                    "access-Token": sessionStorage.getItem('accessToken')
+                }
+            }
 
+            function formatTime(shift) {
+                const [start, end] = shift.split(" - ");
+                const formattedStart = formatTimeNumber(start);
+                const formattedEnd = formatTimeNumber(end);
+                return `${formattedStart} - ${formattedEnd}`;
+            }
+
+            function formatTimeNumber(num) {
+                num = parseInt(num);
+                const hours = Math.floor(num / 100);
+                const minutes = num % 100;
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padEnd(2, '0')}`;
+            }
+
+
+            function logout() {
+                sessionStorage.clear()
+                window.location = "login.html"
+            }
+            function showFullName() {
+                const pTitle = document.getElementById('pageTitle')
+                const fname = sessionStorage.getItem('fullName')
+                const pName = document.createElement('h6')
+                pName.innerText = fname
+                pTitle.appendChild(pName)
+            }
+            async function deleteEmployee() {
+                const params = new URLSearchParams(document.location.search)
+                const id = params.get('id')
+                const resp = await fetch(`${employeeUrl}/delete/${id}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') }
+                })
+                const data = await resp.json()
+                window.location = './employees.html'
+            }
             function cancel() {
                 window.location = "./employees.html";
             }
             async function populateSelect() {
                 try {
-                    const resp = await fetch(departmentUrl);
+                    const resp = await fetch(departmentUrl, {
+                        headers: {
+                            "access-Token": sessionStorage.getItem('accessToken')
+                        }
+                    });
                     const options = await resp.json();
+
                     const select = document.getElementById("department");
                     for (const option of options) {
                         const optionElement = document.createElement("option");
@@ -57,7 +117,7 @@
 
             populateSelect();
             async function getDepartmentById(id) {
-                const data = await fetch(`${departmentUrl}/${id}`);
+                const data = await fetch(`${departmentUrl}/${id}`, options);
                 const dept = await data.json();
                 return dept;
             }
@@ -65,7 +125,7 @@
             const employeeID = params.get('id')
 
             async function loadData() {
-                const resp = await fetch(`${employeeUrl}/${employeeID}`)
+                const resp = await fetch(`${employeeUrl}/${employeeID}`, options)
                 const employee = await resp.json()
                 const department = await getDepartmentById(employee.departmentID)
 
@@ -73,6 +133,25 @@
                 document.getElementById('lname').value = employee.lastName
                 document.getElementById('startWorkYear').value = employee.startWorkYear
                 document.getElementById('department').value = department._id
+                const shifts = await Promise.all(
+                    employee.shifts.map(async (shift) =>
+                        shift ? await getShiftById(shift) : null
+                    )
+                );
+                const shiftsCell = document.createElement("td");
+                const shiftsBody = document.getElementById('shiftsBody')
+                const row = document.createElement("tr");
+                shiftsCell.textContent = "";
+                for (const shift of shifts) {
+                    if (shift) {
+                        const shiftElement = document.createElement("div");
+
+                        shiftElement.textContent = `${formatTime(shift)}`;
+                        shiftsCell.appendChild(shiftElement);
+                    }
+                }
+                row.appendChild(shiftsCell);
+                shiftsBody.appendChild(row);
 
             }
 
@@ -92,7 +171,7 @@
                 try {
                     const resp = await fetch(`${employeeUrl}/${employeeID}`, {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
                         body: JSON.stringify(obj),
                     });
 
@@ -102,6 +181,13 @@
                 } catch (error) {
                     console.error(error);
                 }
+            }
+
+            async function getShiftById(id) {
+                const data = await fetch(`${shiftsUrl}/${id}`, options);
+                const shift = await data.json();
+
+                return `${shift.start} - ${shift.end}`;
             }
         </script>
     </body>
