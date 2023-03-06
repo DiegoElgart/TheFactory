@@ -2,7 +2,7 @@
 
     <head></head>
 
-    <body onload="loadData() ;showFullName()">
+    <body onload="loadData() ;showFullName(); getAllShifts()">
         <button onclick="logout()">Log Out</button>
 
         <div style="margin-top: 50px; width: 450px; float: left;">
@@ -188,6 +188,12 @@
                 const shift = await data.json();
 
                 return `${shift.start} - ${shift.end}`;
+            }
+
+            async function getAllShifts() {
+                const data = await fetch(`${shiftsUrl}`, options)
+                const shifts = await data.json()
+                console.log(shifts)
             }
         </script>
     </body>
