@@ -1,5 +1,6 @@
 const express = require("express");
 const shiftBLL = require("../BLL/shiftBLL");
+const Employee = require("../models/employeeModel");
 
 const router = express.Router();
 
@@ -17,6 +18,12 @@ router.route("/:id").get(async (req, res) => {
 router.route("/add").post(async (req, res) => {
     const shift = req.body;
     const result = await shiftBLL.addShift(shift);
+    res.json(result);
+});
+
+router.route("/addEmployeeToShift").post(async (req, res) => {
+    const { shift, employee } = req.body;
+    const result = await shiftBLL.addEmployeeToShift(shift, employee);
     res.json(result);
 });
 

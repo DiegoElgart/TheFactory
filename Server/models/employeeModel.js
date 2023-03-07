@@ -13,7 +13,7 @@ const employeeSchema = new mongoose.Schema(
         shifts: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Shifts",
+                ref: "Shift",
                 required: false,
             },
         ],

@@ -1,5 +1,6 @@
 const Shift = require("../models/ShiftModel");
 const Employee = require("../models/employeeModel");
+const { default: mongoose } = require("mongoose");
 const getAllShifts = () => {
     return Shift.find({});
 };
@@ -18,6 +19,25 @@ const updateShift = async (id, obj) => {
     await Shift.findByIdAndUpdate(id, obj);
     return "Shift Updated";
 };
+const addEmployeeToShift = async (shiftId, employeeId) => {
+    try {
+        const shift = await Shift.findByIdAndUpdate(
+            shiftId,
+            { $addToSet: { employeesList: employeeId } },
+            { new: true }
+        ).populate("employeesList");
+
+        const employee = await Employee.findByIdAndUpdate(
+            employeeId,
+            { $addToSet: { shifts: shiftId } },
+            { new: true }
+        ).populate("shifts");
+
+        return { shift, employee };
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 const deleteShift = async id => {
     await Shift.findByIdAndDelete(id);
@@ -34,6 +54,7 @@ const getShiftsByEmployeeId = async employeeId => {
         throw new Error("Non Employee encounterd");
     }
     const shifts = await Shift.find({ employeesList: [employeeId] });
+
     return shifts;
 };
 module.exports = {
@@ -44,4 +65,5 @@ module.exports = {
     deleteShift,
     insertMany,
     getShiftsByEmployeeId,
+    addEmployeeToShift,
 };

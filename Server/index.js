@@ -24,7 +24,8 @@ app.use("/auth", authRouter);
 app.use("/users", auth, usersRouter);
 app.use("/employee", auth, employeeRouter);
 app.use("/dept", auth, departmentRouter);
-app.use("/shift", auth, shiftRouter);
+//app.use("/shift", auth, shiftRouter);
+app.use("/shift", shiftRouter);
 
 app.listen(port, () =>
     console.log(`App listening at http://localhost:${port}`)

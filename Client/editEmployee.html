@@ -26,7 +26,7 @@
                     <select id="department"></select>
                 </div>
                 <br />
-                <button type="submit" class="btn btn-primary" onclick="update(event)">
+                <button type="submit" onclick="update(event)">
                     Save
                 </button>
             </form>
@@ -43,6 +43,15 @@
                 </thead>
                 <tbody id="shiftsBody"></tbody>
             </table>
+        </div>
+        <div style="margin-top: 200px; width: 250px; float: left;">
+            <form action="#">
+                <label for="shifts">Open Shifts</label>
+                <select id="shifts">
+                    <option>-----------------</option>
+                </select>
+                <button type="submit" onclick="addShift(event)">Add Shift</button>
+            </form>
         </div>
 
         <script>
@@ -115,6 +124,28 @@
                 }
             }
 
+            async function populateShift() {
+                try {
+                    const resp = await fetch(shiftsUrl, {
+                        headers: {
+                            "access-Token": sessionStorage.getItem('accessToken')
+                        }
+                    });
+                    const shifts = await resp.json();
+
+                    const select = document.getElementById("shifts");
+                    for (const shift of shifts) {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = shift._id;
+                        optionElement.textContent = `${formatDate(shift.date)}: ${formatTimeNumber(shift.start)} - ${formatTimeNumber(shift.end)}`;
+                        select.appendChild(optionElement);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            populateShift();
             populateSelect();
             async function getDepartmentById(id) {
                 const data = await fetch(`${departmentUrl}/${id}`, options);
@@ -145,13 +176,17 @@
                 for (const shift of shifts) {
                     if (shift) {
                         const shiftElement = document.createElement("div");
+                        const shiftDate = document.createElement('h5')
+                        shiftDate.textContent = `${formatDate(shift.date)}`
+                        shiftElement.textContent = `${formatTimeNumber(shift.start)} - ${formatTimeNumber(shift.end)}`;
 
-                        shiftElement.textContent = `${formatTime(shift)}`;
-                        shiftsCell.appendChild(shiftElement);
+                        shiftsCell.appendChild(shiftDate);
+                        shiftDate.appendChild(shiftElement);
                     }
                 }
                 row.appendChild(shiftsCell);
                 shiftsBody.appendChild(row);
+
 
             }
 
@@ -159,7 +194,6 @@
                 e.preventDefault();
                 const params = new URLSearchParams(location.search)
                 const employeeID = params.get('id')
-                console.log(employeeID)
 
                 const obj = {
                     firstName: document.getElementById("fname").value,
@@ -176,7 +210,6 @@
                     });
 
                     const data = await resp.json();
-                    console.log(data);
                     window.location = './employees.html'
                 } catch (error) {
                     console.error(error);
@@ -187,13 +220,43 @@
                 const data = await fetch(`${shiftsUrl}/${id}`, options);
                 const shift = await data.json();
 
-                return `${shift.start} - ${shift.end}`;
+                return shift;
             }
 
             async function getAllShifts() {
                 const data = await fetch(`${shiftsUrl}`, options)
                 const shifts = await data.json()
-                console.log(shifts)
+            }
+            function formatDate(dateStr) {
+                const dateObj = new Date(dateStr);
+                const day = dateObj.getDate().toString().padStart(2, '0');
+                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                const year = dateObj.getFullYear().toString().substr(-2); // Get the last two digits of the year
+                return `${day}/${month}/${year}`;
+            }
+
+
+            function formatTimeNumber(num) {
+                num = parseInt(num);
+                const hours = Math.floor(num / 100);
+                const minutes = num % 100;
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padEnd(2, '0')}`;
+            }
+
+            async function addShift(e) {
+                e.preventDefault()
+                const params = new URLSearchParams(document.location.search)
+                const employeeId = params.get('id')
+                const selecteShift = document.getElementById('shifts')
+                const obj = { "shift": selecteShift.value, "employee": employeeID }
+                const resp = await fetch(`${shiftsUrl}/addEmployeeToShift`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
+                    body: JSON.stringify(obj),
+
+                })
+                const data = await resp.json()
+                window.location.reload()
             }
         </script>
     </body>
