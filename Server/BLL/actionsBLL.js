@@ -17,7 +17,7 @@ const getActionsByIdAndDate = async id => {
     const actionsByDate = actionsById.filter(action => action.date === date);
     console.log(actionsByDate);
 
-    // return actionsByDate;
+    return actionsByDate;
 };
 
 const addAction = async obj => {

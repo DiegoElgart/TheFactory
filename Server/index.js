@@ -8,6 +8,7 @@ const departmentRouter = require("./routes/departmentRouter");
 const employeeRouter = require("./routes/employeeRouter");
 const shiftRouter = require("./routes/shiftRouter");
 const cookieParser = require("cookie-parser");
+
 const connectDB = require("./configs/db");
 
 const app = express();
@@ -20,12 +21,11 @@ app.use(cors());
 app.use(cookieParser());
 
 app.use("/auth", authRouter);
-//app.use(checkMaxActionsById);
+app.use(checkMaxActionsById);
 app.use("/users", auth, usersRouter);
 app.use("/employee", auth, employeeRouter);
 app.use("/dept", auth, departmentRouter);
-//app.use("/shift", auth, shiftRouter);
-app.use("/shift", shiftRouter);
+app.use("/shift", auth, shiftRouter);
 
 app.listen(port, () =>
     console.log(`App listening at http://localhost:${port}`)

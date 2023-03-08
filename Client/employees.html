@@ -31,11 +31,15 @@
                 }
             }
             async function populateSelect() {
+
                 try {
+
                     const resp = await fetch(departmentUrl, {
                         headers: {
-                            "access-Token": sessionStorage.getItem('accessToken')
-                        }
+                            "access-Token": sessionStorage.getItem('accessToken'),
+                            "Access-Control-Allow-Origin": "application/json"
+                        },
+                        //credentials: "include"
                     });
                     const options = await resp.json();
                     const select = document.getElementById("department");
