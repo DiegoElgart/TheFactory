@@ -2,7 +2,7 @@
 
     <!-- <body> -->
 
-    <body onload="getEmployees() ;showFullName()">
+    <body onload="getEmployees() ;showFullName(); populateSelect()">
         <button onclick="logout()">Log Out</button>
         <h1 id="pageTitle">Employees Page</h1>
         <div>
@@ -34,34 +34,34 @@
                     "access-Token": sessionStorage.getItem('accessToken')
                 }
             }
-            // async function populateSelect() {
+            async function populateSelect() {
 
-            //     try {
+                try {
 
-            //         const resp = await fetch(departmentUrl, {
-            //             headers: {
-            //                 "access-Token": sessionStorage.getItem('accessToken')
-            //             }
-            //         });
-            //         const options = await resp.json();
-            //         const select = document.getElementById("department");
-            //         for (const option of options) {
-            //             const optionElement = document.createElement("option");
-            //             optionElement.value = option._id;
-            //             optionElement.id = option.name
-            //             optionElement.textContent = option.name;
-            //             select.appendChild(optionElement);
-            //         }
-            //         // Add event listener to select element
-            //         select.addEventListener('change', async () => {
-            //             const tableBody = document.getElementById("employee-table");
-            //             tableBody.innerHTML = ""; // Clear table
-            //             //await getEmployees();
-            //         });
-            //     } catch (error) {
-            //         console.error(error);
-            //     }
-            // }
+                    const resp = await fetch(departmentUrl, {
+                        headers: {
+                            "access-Token": sessionStorage.getItem('accessToken')
+                        }
+                    });
+                    const options = await resp.json();
+                    const select = document.getElementById("department");
+                    for (const option of options) {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option._id;
+                        optionElement.id = option.name
+                        optionElement.textContent = option.name;
+                        select.appendChild(optionElement);
+                    }
+                    // Add event listener to select element
+                    select.addEventListener('change', async () => {
+                        const tableBody = document.getElementById("employee-table");
+                        tableBody.innerHTML = ""; // Clear table
+                        //await getEmployees();
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
 
             function logout() {
                 sessionStorage.clear()
@@ -111,7 +111,7 @@
                 const deptSelectedIndex = deptSelected.selectedIndex;
                 const deptFilter = deptSelected.options[deptSelectedIndex];
                 let employees = await resp.json();
-                console.log(employees)
+                //console.log(employees)
 
                 if (deptFilter.value !== "none") {
                     employees = employees.filter((employee) => employee.departmentID === deptFilter.value);
@@ -128,34 +128,36 @@
                     row.appendChild(nameLink);
 
                     //Calling dept by employee id
-                    // const dept = await getDepartmentById(employee.departmentID);
-                    // //console.log(dept)
-                    // const deptCell = document.createElement("td");
-                    // deptCell.textContent = dept.name;
-                    // row.appendChild(deptCell);
-                    // const shifts = await Promise.all(
-                    //     employee.shifts.map(async (shift) =>
-                    //         shift ? await getShiftById(shift) : null
-                    //     )
-                    // );
+                    const dept = await getDepartmentById(employee.departmentID);
+                    //console.log(dept)
+                    const deptCell = document.createElement("td");
+                    deptCell.textContent = dept.name;
+                    row.appendChild(deptCell);
+
 
                     //Calling shifts
-                    // const shiftsCell = document.createElement("td");
-                    // shiftsCell.textContent = "";
-                    // for (const shift of shifts) {
-                    //     if (shift) {
+                    const shifts = await Promise.all(
+                        employee.shifts.map(async (shift) =>
+                            shift ? await getShiftById(shift) : null
+                        )
+                    );
+                    //console.log(shifts)
+                    const shiftsCell = document.createElement("td");
+                    shiftsCell.textContent = "";
+                    for (const shift of shifts) {
+                        if (shift) {
 
-                    //         const shiftElement = document.createElement("div");
-                    //         const shiftDate = document.createElement('h5')
-                    //         shiftDate.textContent = `${formatDate(shift.date)}`
-                    //         shiftElement.textContent = `${formatTimeNumber(shift.start)} - ${formatTimeNumber(shift.end)}`;
+                            const shiftElement = document.createElement("div");
+                            const shiftDate = document.createElement('h5')
+                            shiftDate.textContent = `${formatDate(shift.date)}`
+                            shiftElement.textContent = `${formatTimeNumber(shift.start)} - ${formatTimeNumber(shift.end)}`;
 
-                    //         shiftsCell.appendChild(shiftDate);
-                    //         shiftDate.appendChild(shiftElement);
-                    //     }
-                    // }
-                    // row.appendChild(shiftsCell);
-                    // tableBody.appendChild(row);
+                            shiftsCell.appendChild(shiftDate);
+                            shiftDate.appendChild(shiftElement);
+                        }
+                    }
+                    row.appendChild(shiftsCell);
+                    tableBody.appendChild(row);
                 }
             }
 

@@ -7,7 +7,7 @@ const checkMaxActionsById = async (req, res, next) => {
         const { id } = jwt.decode(token, process.env.SECRET_KEY);
         const actions = await actionsBLL.getActionsByIdAndDate(id);
         const len = actions.length - 1;
-        console.log("Request from:", req.headers);
+        //console.log("Request from:", req.headers);
         if (actions[len].actionAllowed >= 1) {
             actions[len]["actionAllowed"] = actions[len]["actionAllowed"] - 1;
             await actionsBLL.addAction(actions[len]);
