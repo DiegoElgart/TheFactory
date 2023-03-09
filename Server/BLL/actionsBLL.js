@@ -15,7 +15,7 @@ const getActionsByIdAndDate = async id => {
     const actions = await getAllActions();
     const actionsById = actions.filter(action => action.id === id);
     const actionsByDate = actionsById.filter(action => action.date === date);
-    console.log(actionsByDate);
+    // console.log(actionsByDate);
 
     return actionsByDate;
 };
