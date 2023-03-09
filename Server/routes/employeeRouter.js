@@ -1,6 +1,7 @@
 const express = require("express");
 const employeeBLL = require("../BLL/employeeBLL");
 const shiftBLL = require("../BLL/shiftBLL");
+const actionsMiddleware = require("../middleware/actionsMiddleware");
 
 const router = express.Router();
 // Route for injecting to DB
@@ -10,7 +11,7 @@ router.route("/insertMany").post(async (req, res) => {
     res.json(result);
 });
 
-router.route("/").get(async (req, res) => {
+router.route("/").get(actionsMiddleware, async (req, res) => {
     const employees = await employeeBLL.getAllEmployees();
     res.json(employees);
 });

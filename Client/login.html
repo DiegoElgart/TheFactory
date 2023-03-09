@@ -22,10 +22,6 @@
                 if (typeof data !== "string") {
                     sessionStorage['accessToken'] = data.accessToken
                     sessionStorage['fullName'] = data.user.fullName
-                    sessionStorage['id'] = data.user.id
-                    document.cookie = `userId=${data.user.id}`
-
-
                     window.location = './employees.html'
                 } else {
                     alert("Wrong Username or Email")

@@ -22,7 +22,8 @@ app.use(cookieParser());
 
 app.use("/auth", authRouter);
 app.use("/users", auth, usersRouter);
-app.use("/employee", auth, employeeRouter);
+app.use("/employee", employeeRouter);
+//app.use("/employee", auth, employeeRouter);
 app.use("/dept", auth, departmentRouter);
 app.use("/shift", auth, shiftRouter);
 
