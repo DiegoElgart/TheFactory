@@ -1,0 +1,170 @@
+<html>
+
+    <head></head>
+
+    <body onload="populateManagerSelect() ;showFullName(); loadData()">
+        <button onclick="logout()">Log Out</button>
+        <h1 id="pageTitle">Edit Department Page</h1>
+        <div style="margin-top: 50px">
+            <h1>Add New Department</h1>
+            <br />
+            <form action="#">
+                <div>
+                    <label for="name">Department Name</label>
+                    <input type="text" id="name" placeholder="Department Name" />
+                </div>
+
+                <div>
+                    <label for="manager">Choose a manager for your new Department</label>
+                    <select id="manager">
+                        <option value="none">---Chose a Manager---</option>
+                    </select>
+                </div>
+
+                <br />
+                <button type="submit" class="btn btn-primary" onclick="update(event)">
+                    Update
+                </button>
+            </form>
+            <button onclick="cancel()">Cancel</button>
+            <button onclick="deleteDepartment()">Delete</button>
+        </div>
+        <div style="margin-top: 50px">
+            <h3>Employees NOT from this Department</h3>
+            <label for="employees">Bring some employees to this Department</label>
+            <select id="employees">
+                <option value="none">---Chose an Employee---</option>
+            </select>
+            <button onclick="updateDepForEmployee(event)">Add</button>
+        </div>
+
+        <script>
+            const employeeUrl = "http://localhost:4000/employee";
+            const departmentUrl = "http://localhost:4000/dept";
+            const params = new URLSearchParams(location.search)
+            const departmentID = params.get('id')
+            const options = {
+                headers: {
+                    "access-Token": sessionStorage.getItem('accessToken'),
+                    'Cookie': `userId=${sessionStorage['id']}`
+                }
+            }
+
+            async function populateManagerSelect() {
+
+                try {
+
+                    const resp = await fetch(employeeUrl, {
+                        headers: {
+                            "access-Token": sessionStorage.getItem('accessToken')
+                        }
+                    });
+                    const options = await resp.json();
+                    const select = document.getElementById("manager");
+                    for (const option of options) {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option._id;
+                        optionElement.id = option._id
+                        optionElement.textContent = `${option.firstName} ${option.lastName}`;
+                        select.appendChild(optionElement);
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+            async function update(e) {
+                e.preventDefault();
+                // const params = new URLSearchParams(location.search)
+                // const departmentID = params.get('id')
+
+                const obj = {
+                    name: document.getElementById("name").value,
+                    manager: document.getElementById("manager").value,
+
+                };
+
+                try {
+                    const resp = await fetch(`${departmentUrl}/${departmentID}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
+                        body: JSON.stringify(obj),
+                    });
+
+                    const data = await resp.json();
+                    window.location = './departments.html'
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+            async function loadData() {
+                const resp = await fetch(`${departmentUrl}/${departmentID}`, options)
+                const department = await resp.json()
+                document.getElementById('name').value = department.name
+                document.getElementById('manager').value = department.manager
+            }
+            async function deleteDepartment() {
+
+                const resp = await fetch(`${departmentUrl}/delete/${departmentID}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') }
+                })
+                const data = await resp.json()
+                window.location = './departments.html'
+            }
+            async function employeesNOTBelong() {
+                try {
+                    const resp = await fetch(`${departmentUrl}/${departmentID}/employees`, options)
+                    const employees = await resp.json()
+                    const select = document.getElementById("employees");
+                    for (const employee of employees) {
+                        const employeeElement = document.createElement("option");
+                        employeeElement.value = employee._id;
+                        employeeElement.id = employee._id
+                        employeeElement.textContent = `${employee.firstName} ${employee.lastName}`;
+                        select.appendChild(employeeElement);
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                }
+
+            }
+            async function updateDepForEmployee(e) {
+                e.preventDefault()
+                const employeeID = document.getElementById('employees').value
+                const resp = await fetch(`${employeeUrl}/${employeeID}`, options)
+                const employee = await resp.json()
+                console.log(employee)
+                employee.departmentID = departmentID
+
+                try {
+                    const resp = await fetch(`${employeeUrl}/${employeeID}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
+                        body: JSON.stringify(employee),
+                    });
+
+                    const data = await resp.json();
+                    window.location = './employees.html'
+                } catch (error) {
+                    console.error(error);
+                }
+
+            }
+            function showFullName() {
+                const pTitle = document.getElementById('pageTitle')
+                const fname = sessionStorage.getItem('fullName')
+                const pName = document.createElement('h6')
+                pName.innerText = fname
+                pTitle.appendChild(pName)
+            }
+            function logout() {
+                sessionStorage.clear()
+                window.location = "login.html"
+            }
+            function cancel() {
+                window.location = "./departments.html";
+            }
+            employeesNOTBelong()
+        </script>

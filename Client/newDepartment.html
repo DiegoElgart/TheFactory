@@ -1,0 +1,104 @@
+<html>
+
+    <head></head>
+
+    <body onload="populateSelect() ;showFullName();">
+        <button onclick="logout()">Log Out</button>
+        <h1 id="pageTitle">New Department Page</h1>
+        <div style="margin-top: 50px">
+            <h1>Add New Department</h1>
+            <br />
+            <form action="#">
+                <div>
+                    <label for="name">Department Name</label>
+                    <input type="text" id="name" placeholder="Department Name" />
+                </div>
+
+                <div>
+                    <label for="manager">Choose a manager for your new Department</label>
+                    <select id="manager">
+                        <option value="none">---Chose a Manager---</option>
+                    </select>
+                </div>
+
+                <br />
+                <button type="submit" class="btn btn-primary" onclick="add(event)">
+                    Save
+                </button>
+            </form>
+            <button onclick="cancel()">Cancel</button>
+        </div>
+
+        <script>
+            const employeeUrl = "http://localhost:4000/employee";
+            const departmentUrl = "http://localhost:4000/dept";
+
+            async function populateSelect() {
+
+                try {
+
+                    const resp = await fetch(employeeUrl, {
+                        headers: {
+                            "access-Token": sessionStorage.getItem('accessToken')
+                        }
+                    });
+                    const options = await resp.json();
+                    const select = document.getElementById("manager");
+                    for (const option of options) {
+                        const optionElement = document.createElement("option");
+                        optionElement.value = option._id;
+                        optionElement.id = option._id
+                        optionElement.textContent = `${option.firstName} ${option.lastName}`;
+                        select.appendChild(optionElement);
+                    }
+                    // Add event listener to select element
+                    // select.addEventListener('change', async () => {
+                    //     const tableBody = document.getElementById("employee-table");
+                    //     tableBody.innerHTML = ""; // Clear table
+
+                    // });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            async function add(e) {
+                e.preventDefault();
+
+                const obj = {
+                    name: document.getElementById("name").value,
+                    manager: document.getElementById("manager").value,
+
+                };
+
+                try {
+                    const resp = await fetch(`${departmentUrl}/add`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
+                        body: JSON.stringify(obj),
+                    });
+
+                    const data = await resp.json();
+                    console.log(data);
+                    window.location = './departments.html'
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+
+            function showFullName() {
+                const pTitle = document.getElementById('pageTitle')
+                const fname = sessionStorage.getItem('fullName')
+                const pName = document.createElement('h6')
+                pName.innerText = fname
+                pTitle.appendChild(pName)
+            }
+            function logout() {
+                sessionStorage.clear()
+                window.location = "login.html"
+            }
+            function cancel() {
+                window.location = "./departments.html";
+            }
+        </script>

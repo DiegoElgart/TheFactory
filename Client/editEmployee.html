@@ -96,7 +96,7 @@
                 const id = params.get('id')
                 const resp = await fetch(`${employeeUrl}/delete/${id}`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken'), 'Cookie': `userId=${sessionStorage['id']}` }
+                    headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') }
                 })
                 const data = await resp.json()
                 window.location = './employees.html'
@@ -206,7 +206,7 @@
                 try {
                     const resp = await fetch(`${employeeUrl}/${employeeID}`, {
                         method: "POST",
-                        headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken'), 'Cookie': `userId=${sessionStorage['id']}` },
+                        headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
                         body: JSON.stringify(obj),
                     });
 

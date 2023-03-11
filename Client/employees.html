@@ -3,6 +3,15 @@
     <!-- <body> -->
 
     <body onload="getEmployees() ;showFullName(); populateSelect()">
+        <nav>
+            <ul>
+                <li><a href="departments.html">Departments</a></li>
+                <li><a href="employees.html">Employees</a></li>
+                <li><a href="shifts.html">Shifts</a></li>
+                <li><a href="users.html">Users</a></li>
+            </ul>
+        </nav>
+
         <button onclick="logout()">Log Out</button>
         <h1 id="pageTitle">Employees Page</h1>
         <div>
@@ -56,7 +65,7 @@
                     select.addEventListener('change', async () => {
                         const tableBody = document.getElementById("employee-table");
                         tableBody.innerHTML = ""; // Clear table
-                        //await getEmployees();
+                        await getEmployees();
                     });
                 } catch (error) {
                     console.error(error);
@@ -127,13 +136,25 @@
                     nameLink.innerHTML = `${employee.firstName} ${employee.lastName}`;
                     row.appendChild(nameLink);
 
-                    //Calling dept by employee id
+                    //lling dept by employee id
                     const dept = await getDepartmentById(employee.departmentID);
-                    //console.log(dept)
-                    const deptCell = document.createElement("td");
-                    deptCell.textContent = dept.name;
-                    row.appendChild(deptCell);
+                    if (dept) {
+                        const deptCell = document.createElement("td");
+                        const deptLink = document.createElement("a");
+                        if (dept._id) {
 
+                            deptLink.href = `editDepartment.html?id=${dept._id}`
+                        } else {
+                            deptLink.href = "N/A"
+                        }
+                        deptLink.innerHTML = dept.name;
+                        deptCell.appendChild(deptLink);
+                        row.appendChild(deptCell)
+                    } else {
+                        const deptCell = document.createElement("td");
+                        deptCell.innerHTML = "N/A"
+                        row.appendChild(deptCell)
+                    }
 
                     //Calling shifts
                     const shifts = await Promise.all(

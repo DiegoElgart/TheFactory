@@ -1,0 +1,120 @@
+<html>
+
+    <body onload="showFullName(); populateTable()">
+        <nav>
+            <ul>
+                <li><a href="department.html">Departments</a></li>
+                <li><a href="employees.html">Employees</a></li>
+                <li><a href="shifts.html">Shifts</a></li>
+                <li><a href="users.html">Users</a></li>
+            </ul>
+        </nav>
+
+        <button onclick="logout()">Log Out</button>
+        <h1 id="pageTitle">Departments Page</h1>
+        <br />
+        <table>
+            <thead>
+                <tr>
+                    <th>Department Name</th>
+                    <th>Department Manager</th>
+                    <th>Employees</th>
+                </tr>
+            </thead>
+            <tbody id="department-table"></tbody>
+        </table>
+        <button onclick="addNewDept()">Add new Department</button>
+        <script>
+
+            const employeeUrl = "http://localhost:4000/employee";
+            const departmentUrl = "http://localhost:4000/dept";
+
+            const options = {
+                headers: {
+                    "access-Token": sessionStorage.getItem('accessToken')
+                }
+            }
+
+            async function populateTable() {
+                try {
+                    const resp = await fetch(departmentUrl, options);
+                    const departments = await resp.json();
+                    const tableBody = document.getElementById("department-table");
+
+                    for (const department of departments) {
+                        const row = document.createElement("tr");
+
+                        // Add department name to row
+                        const deptNameCell = document.createElement("td");
+                        const nameLink = document.createElement("a");
+                        nameLink.href = `editDepartment.html?id=${department._id}`
+                        nameLink.innerHTML = department.name
+                        row.appendChild(nameLink);
+
+                        // Add department manager to row
+                        const deptManagerCell = document.createElement("td");
+                        const manager = await getEmployeeById(department.manager);
+                        if (manager) {
+                            deptManagerCell.textContent = `${manager.firstName} ${manager.lastName}`;
+                        } else {
+                            deptManagerCell.textContent = "N/A";
+                        }
+                        row.appendChild(deptManagerCell);
+
+                        // Add list of employees in department to row
+                        const deptEmployeesCell = document.createElement("td");
+                        const employees = await getEmployeesByDepartmentId(department._id);
+                        if (employees.length > 0) {
+                            const employeeList = document.createElement("ul");
+                            for (const employee of employees) {
+                                const employeeListItem = document.createElement("li");
+                                const employeeLink = document.createElement("a");
+                                employeeLink.href = `editEmployee.html?id=${employee._id}`;
+                                employeeLink.innerHTML = `${employee.firstName} ${employee.lastName}`;
+                                employeeListItem.appendChild(employeeLink);
+                                employeeList.appendChild(employeeListItem);
+                            }
+                            deptEmployeesCell.appendChild(employeeList);
+                        } else {
+                            deptEmployeesCell.textContent = "N/A";
+                        }
+                        row.appendChild(deptEmployeesCell);
+
+                        tableBody.appendChild(row);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            async function getEmployeeById(id) {
+                const resp = await fetch(`${employeeUrl}/${id}`, options);
+                const employee = await resp.json();
+                return employee;
+            }
+
+            async function getEmployeesByDepartmentId(id) {
+                const resp = await fetch(`${employeeUrl}/${id}/dept`, options);
+                const employees = await resp.json();
+                return employees;
+            }
+
+            function logout() {
+                sessionStorage.clear()
+                window.location = "login.html"
+            }
+            function showFullName() {
+                const pTitle = document.getElementById('pageTitle')
+                const fname = sessionStorage.getItem('fullName')
+                const pName = document.createElement('h6')
+                pName.innerText = fname
+                pTitle.appendChild(pName)
+            }
+            function addNewDept() {
+                window.location = './newDepartment.html'
+            }
+
+        </script>
+    </body>
+
+</html>

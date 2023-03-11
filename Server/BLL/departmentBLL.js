@@ -21,6 +21,12 @@ const updateDepartment = async (id, obj) => {
 };
 
 const deleteDepartment = async id => {
+    const dept = await Department.findById(id);
+    const employeesList = await Employee.find({ departmentID: dept._id });
+    employeesList.map(
+        async employee => await Employee.findByIdAndDelete(employee._id)
+    );
+
     await Department.findByIdAndDelete(id);
     return "Department Deleted";
 };
