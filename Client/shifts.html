@@ -1,72 +1,131 @@
 <html>
 
-    <input>
-    <nav>
-        <ul>
-            <li><a href="departments.html">Departments</a></li>
-            <li><a href="employees.html">Employees</a></li>
-            <li><a href="shifts.html">Shifts</a></li>
-            <li><a href="users.html">Users</a></li>
-        </ul>
-    </nav>
-    <button onclick="logout()">Log Out</button>
+    <body onload="buildTableFromURL()">
+        <input>
+        <nav>
+            <ul>
+                <li><a href="departments.html">Departments</a></li>
+                <li><a href="employees.html">Employees</a></li>
+                <li><a href="shifts.html">Shifts</a></li>
+                <li><a href="users.html">Users</a></li>
+            </ul>
+        </nav>
+        <button onclick="logout()">Log Out</button>
 
-    <h1>Shifts</h1>
-    <label for="date">Date</label>
-    <input type="date" id="date">
-    <br />
-    <br />
-    <label for="start">Starts at:</label>
-    <input type="time" id="start">
-    <label for="end">Ends at:</label>
-    <input type="time" id="end">
-    <br />
-    <br />
-    <br />
-    <button onclick="add(event)">Add Shift</button>
-    <script>
-        const shiftUrl = "http://localhost:4000/shift";
+        <h1>Shifts</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+        <br />
+        <br />
+        <br />
+        <h3>Add new Shift</h3>
+        <label for="date">Date</label>
+        <input type="date" id="date">
+        <br />
+        <br />
+        <label for="start">Starts at:</label>
+        <input type="time" id="start">
+        <label for="end">Ends at:</label>
+        <input type="time" id="end">
+        <br />
+        <br />
+        <br />
+        <button onclick="add(event)">Add Shift</button>
+        <script>
+            const shiftUrl = "http://localhost:4000/shift";
 
-        const options = {
-            headers: {
-                "access-Token": sessionStorage.getItem('accessToken')
+            const options = {
+                headers: {
+                    "access-Token": sessionStorage.getItem('accessToken')
+                }
             }
-        }
-        async function add(e) {
-            e.preventDefault();
-            const date = new Date(document.getElementById('date').value);
-            const start = document.getElementById('start').value
-            const end = document.getElementById('end').value
-            const formatedDate = date.toISOString();
-            const formatedStart = formatHour(start)
-            const formatedEnd = formatHour(end)
-            console.log(formatedStart, formatedEnd);
+            async function add(e) {
+                e.preventDefault();
+                const date = new Date(document.getElementById('date').value);
+                const start = document.getElementById('start').value
+                const end = document.getElementById('end').value
+                const formatedDate = date.toISOString();
+                const formatedStart = formatHour(start)
+                const formatedEnd = formatHour(end)
+                console.log(formatedStart, formatedEnd);
 
-            const obj = { date: date, start: formatedStart, end: formatedEnd, employeesList: [] }
+                const obj = { date: date, start: formatedStart, end: formatedEnd, employeesList: [] }
 
-            try {
-                const resp = await fetch(`${shiftUrl}/add`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
-                    body: JSON.stringify(obj),
-                })
-                const data = await resp.json();
+                try {
+                    const resp = await fetch(`${shiftUrl}/add`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
+                        body: JSON.stringify(obj),
+                    })
+                    const data = await resp.json();
 
-                window.location = './employees.html'
-            } catch (error) {
-                console.error(error);
+                    window.location = './shifts.html'
+                } catch (error) {
+                    console.error(error);
+                }
             }
-        }
+            async function buildTableFromURL() {
+                const response = await fetch(shiftUrl, options);
+                const data = await response.json();
+                const tableBody = document.getElementById('table-body');
 
-        function formatHour(hour) {
-            const [h, m] = hour.split(':');
-            return `${h}${m}`;
-        }
-        function logout() {
-            sessionStorage.clear()
-            window.location = "login.html"
-        }
-    </script>
+                function buildRows(rowsData) {
+                    for (const row of rowsData) {
+                        const tr = document.createElement('tr');
+                        const dateTd = document.createElement('td');
+                        const dateLink = document.createElement('a')
+                        dateLink.href = `editShift.html?id=${row._id}`
+                        const startTd = document.createElement('td');
+                        const endTd = document.createElement('td');
+                        dateLink.innerText = formatDate(row.date);
+                        startTd.innerText = formatTimeNumber(row.start);
+                        endTd.innerText = formatTimeNumber(row.end);
+                        tr.appendChild(dateLink);
+                        tr.appendChild(startTd);
+                        tr.appendChild(endTd);
+                        tableBody.appendChild(tr);
+
+                        if (row.subdata && row.subdata.length > 0) {
+                            buildRows(row.subdata);
+                        }
+                    }
+                }
+
+                buildRows(data);
+            }
+            function formatHour(hour) {
+                const [h, m] = hour.split(':');
+                return `${h}${m}`;
+            }
+            function logout() {
+                sessionStorage.clear()
+                window.location = "login.html"
+            }
+            function formatDate(dateStr) {
+                const dateObj = new Date(dateStr);
+                const day = dateObj.getDate().toString().padStart(2, '0');
+                const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+                const year = dateObj.getFullYear().toString().substr(-2); // Get the last two digits of the year
+                return `${day}/${month}/${year}`;
+            }
+
+
+            function formatTimeNumber(num) {
+                num = parseInt(num);
+                const hours = Math.floor(num / 100);
+                const minutes = num % 100;
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padEnd(2, '0')}`;
+            }
+        </script>
     </body>
 
 </html>

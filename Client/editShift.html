@@ -1,0 +1,144 @@
+<html>
+
+    <body onload="loadShift(); populateEmployeeSelect()">
+        <h3>Edit Shift</h3>
+        <label for="date">Date</label>
+        <input type="date" id="date">
+        <br />
+        <br />
+        <label for="start">Starts at:</label>
+        <input type="time" id="start">
+        <label for="end">Ends at:</label>
+        <input type="time" id="end">
+        <br />
+        <br />
+        <br />
+        <button onclick="update(event)">Update Shift</button>
+        <button onclick="cancel()">Cancel</button>
+        <br />
+        <br />
+        <br />
+        <div>
+            <label for="employee">Add an employee to this shift</label>
+            <select id="employee">
+                <option value="none">---Chose an employee---</option>
+            </select>
+            <button onclick="addShift(event)">Add Employee to shift</button>
+        </div>
+
+    </body>
+    <script>
+        const shiftUrl = "http://localhost:4000/shift";
+        const employeeUrl = "http://localhost:4000/employee";
+
+
+        const options = {
+            headers: {
+                "access-Token": sessionStorage.getItem('accessToken')
+            }
+        }
+
+        async function loadShift() {
+            const params = new URLSearchParams(document.location.search)
+            const id = params.get('id')
+            const resp = await fetch(`${shiftUrl}/${id}`, options)
+            const shift = await resp.json()
+            const date = document.getElementById('date')
+            const start = document.getElementById('start')
+            const end = document.getElementById('end')
+            date.value = formatDate(shift.date)
+            start.value = formatTimeNumber(shift.start)
+            end.value = formatTimeNumber(shift.end)
+        }
+        function formatDate(dateStr) {
+            const dateObj = new Date(dateStr);
+            const day = dateObj.getDate().toString().padStart(2, '0');
+            const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+            const year = dateObj.getFullYear().toString(); // Get the last two digits of the year
+            return `${year}-${month}-${day}`;
+        }
+
+        function formatHour(hour) {
+            const [h, m] = hour.split(':');
+            return `${h}${m}`;
+        }
+        function formatTimeNumber(num) {
+            num = parseInt(num);
+            const hours = Math.floor(num / 100);
+            const minutes = num % 100;
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padEnd(2, '0')}`;
+        }
+        function cancel() {
+            window.location = "./shifts.html";
+        }
+        async function update(e) {
+            e.preventDefault();
+            const params = new URLSearchParams(location.search)
+            const shiftID = params.get('id')
+            const date = new Date(document.getElementById('date').value)
+            const formateDate = date.toISOString()
+            const obj = {
+                date: formateDate,
+                start: formatHour(document.getElementById("start").value),
+                end: formatHour(document.getElementById("end").value),
+
+            };
+
+            try {
+                const resp = await fetch(`${shiftUrl}/${shiftID}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
+                    body: JSON.stringify(obj),
+                });
+
+                const data = await resp.json();
+                window.location = './shifts.html'
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        async function populateEmployeeSelect() {
+
+            try {
+
+                const resp = await fetch(employeeUrl, {
+                    headers: {
+                        "access-Token": sessionStorage.getItem('accessToken')
+                    }
+                });
+                const options = await resp.json();
+                const select = document.getElementById("employee");
+                for (const option of options) {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = option._id;
+                    optionElement.id = option._id
+                    optionElement.textContent = `${option.firstName} ${option.lastName}`;
+                    select.appendChild(optionElement);
+                }
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        async function addShift(e) {
+            e.preventDefault()
+            const params = new URLSearchParams(document.location.search)
+            const id = params.get('id')
+
+
+            const employeeID = document.getElementById('employee').value
+            const obj = { "shift": id, "employee": employeeID }
+            const resp = await fetch(`${shiftUrl}/addEmployeeToShift`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken'), 'Cookie': `userId=${sessionStorage['id']}` },
+                body: JSON.stringify(obj),
+
+            })
+            const data = await resp.json()
+            window.location = 'shifts.html'
+        }
+    </script>
+
+</html>
