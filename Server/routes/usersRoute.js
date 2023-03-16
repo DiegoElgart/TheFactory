@@ -8,6 +8,11 @@ router.route("/").get(async (req, res) => {
     res.json(users);
 });
 
+router.route("/db").get(async (req, res) => {
+    const users = await usersWSBLL.getAllUsersDB();
+    res.json(users);
+});
+
 // Route for injecting to DB
 router.route("/insertMany").post(async (req, res) => {
     const users = req.body;

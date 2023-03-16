@@ -2,25 +2,24 @@ const usersWS = require("../DAL/usersWS");
 const User = require("../models/userModel");
 const actionsBLL = require("../BLL/actionsBLL");
 
-// const getAllUsers = async () => {
-//     let { data: users } = await usersWS.getAllUsers();
-
-//     users = users.map(user => {
-//         return {
-//             fullName: user.name,
-//             username: user.username,
-//             email: user.email,
-//         };
-//     });
-//     return users;
-// };
-
 const getAllUsers = async () => {
+    let { data: users } = await usersWS.getAllUsers();
+
+    users = users.map(user => {
+        return {
+            fullName: user.name,
+            username: user.username,
+            email: user.email,
+        };
+    });
+    return users;
+};
+
+const getAllUsersDB = async () => {
     const users = await User.find();
-    const actions = await Promise.all(
-        users.map(user => actionsBLL.getActionsById(user._id.toString()))
-    );
-    console.log(actions);
+    const actions = await actionsBLL.getAllActions();
+
+    return actions;
 };
 
 const getUserByEmailAndUsername = async (username, email) => {
@@ -61,4 +60,5 @@ module.exports = {
     getUserByEmailAndUsername,
     insertMany,
     // updateMaxActionsInDB,
+    getAllUsersDB,
 };
