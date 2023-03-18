@@ -12,7 +12,7 @@ const checkMaxActionsById = async (req, res, next) => {
             actions[len]["actionAllowed"] = actions[len]["actionAllowed"] - 1;
             await actionsBLL.addAction(actions[len]);
         } else {
-            //res.status(400).json("No more actions for today");
+            // res.status(400).json("No more actions for today");
             console.log("Done for the day");
         }
         next();
