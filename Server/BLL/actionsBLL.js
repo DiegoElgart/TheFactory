@@ -64,6 +64,14 @@ const updateMaxActions = async id => {
     }
     return "No More Actions for Today";
 };
+const getAllMostUpdatedActions = async () => {
+    const { actions } = await actionsFile.getActions();
+    const latestDate = dateUtil.getDate();
+    const mostUpdatedActions = actions.filter(
+        action => action.date === latestDate
+    );
+    return mostUpdatedActions;
+};
 
 module.exports = {
     getAllActions,
@@ -73,4 +81,5 @@ module.exports = {
     checkMaxActionsById,
     updateMaxActions,
     getActionsByIdAndDate,
+    getAllMostUpdatedActions,
 };

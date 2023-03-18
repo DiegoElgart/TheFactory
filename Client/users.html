@@ -1,7 +1,61 @@
 <html>
 
-    <body>
+    <head>
+        <title>User Actions Table</title>
+    </head>
 
+    <body>
+        <nav>
+            <ul>
+                <li><a href="departments.html">Departments</a></li>
+                <li><a href="employees.html">Employees</a></li>
+                <li><a href="shifts.html">Shifts</a></li>
+                <li><a href="users.html">Users</a></li>
+            </ul>
+        </nav>
+        <table>
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Max Actions Allowed</th>
+                    <th>Current Actions Allowed Today</th>
+                </tr>
+            </thead>
+            <tbody id="userActionsTableBody">
+            </tbody>
+        </table>
+
+        <script>
+            const userUrl = "http://localhost:4000/users/info";
+            const options = {
+                headers: {
+                    "access-Token": sessionStorage.getItem('accessToken')
+                }
+            }
+            async function fetchUserActions() {
+                const response = await fetch(userUrl, options);
+                const userActions = await response.json();
+                const userActionsTableBody = document.getElementById('userActionsTableBody');
+
+                userActions.forEach(userAction => {
+                    const row = document.createElement('tr');
+                    const userNameCell = document.createElement('td');
+                    const maxActionsCell = document.createElement('td');
+                    const currentActionsCell = document.createElement('td');
+
+                    userNameCell.textContent = userAction.fullName;
+                    maxActionsCell.textContent = userAction.numOfActions;
+                    currentActionsCell.textContent = userAction.actionAllowed;
+
+                    row.appendChild(userNameCell);
+                    row.appendChild(maxActionsCell);
+                    row.appendChild(currentActionsCell);
+                    userActionsTableBody.appendChild(row);
+                });
+            }
+
+            fetchUserActions();
+        </script>
     </body>
 
 </html>
