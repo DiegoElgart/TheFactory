@@ -23,7 +23,7 @@ const getAllUsersDB = async () => {
 };
 
 const getUserByEmailAndUsername = async (username, email) => {
-    let users = await getAllUsers();
+    let users = await getAllUsersFromWs();
     const user = users.find(
         user => user.email === email && user.username === username
     );
@@ -56,9 +56,10 @@ const insertMany = async arr => {
     return result;
 };
 module.exports = {
-    getAllUsers,
+    getAllUsersFromWs,
     getUserByEmailAndUsername,
     insertMany,
+    getAllUsers,
     // updateMaxActionsInDB,
     getAllUsersDB,
 };
