@@ -2,7 +2,7 @@ const usersWS = require("../DAL/usersWS");
 const User = require("../models/userModel");
 const actionsBLL = require("../BLL/actionsBLL");
 
-const getAllUsers = async () => {
+const getAllUsersFromWs = async () => {
     let { data: users } = await usersWS.getAllUsers();
 
     users = users.map(user => {
@@ -15,11 +15,9 @@ const getAllUsers = async () => {
     return users;
 };
 
-const getAllUsersDB = async () => {
+const getAllUsers = async () => {
     const users = await User.find();
-    const actions = await actionsBLL.getAllActions();
-
-    return actions;
+    // const actions = users.map(user=>user)
 };
 
 const getUserByEmailAndUsername = async (username, email) => {
@@ -56,9 +54,9 @@ const insertMany = async arr => {
     return result;
 };
 module.exports = {
+    getAllUsersFromWs,
     getUserByEmailAndUsername,
     insertMany,
     getAllUsers,
     // updateMaxActionsInDB,
-    getAllUsersDB,
 };
