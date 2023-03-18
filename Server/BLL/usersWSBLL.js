@@ -56,7 +56,6 @@ const insertMany = async arr => {
     return result;
 };
 module.exports = {
-    getAllUsersFromWs,
     getUserByEmailAndUsername,
     insertMany,
     getAllUsers,
