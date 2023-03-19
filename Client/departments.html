@@ -38,6 +38,7 @@
             async function populateTable() {
                 try {
                     const resp = await fetch(departmentUrl, options);
+                    if (resp.status === 401) logout()
                     const departments = await resp.json();
                     const tableBody = document.getElementById("department-table");
 

@@ -52,6 +52,8 @@
                             "access-Token": sessionStorage.getItem('accessToken')
                         }
                     });
+                    if (resp.status === 401) logout()
+
                     const options = await resp.json();
                     const select = document.getElementById("department");
                     for (const option of options) {
@@ -104,18 +106,23 @@
 
             async function getDepartmentById(id) {
                 const data = await fetch(`${departmentUrl}/${id}`, options);
+                if (data.status === 401) logout()
+
                 const dept = await data.json();
                 return dept;
             }
 
             async function getShiftById(id) {
                 const data = await fetch(`${shiftUrl}/${id}`, options);
+                if (data.status === 401) logout()
+
                 const shift = await data.json();
                 return shift
             }
 
             async function getEmployees() {
                 const resp = await fetch(employeeUrl, options);
+                if (resp.status === 401) logout()
                 const deptSelected = document.getElementById("department");
                 const deptSelectedIndex = deptSelected.selectedIndex;
                 const deptFilter = deptSelected.options[deptSelectedIndex];

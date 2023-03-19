@@ -1,1 +1,472 @@
-{"actions":[{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":4},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":4},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":3},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":2},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":1},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":0},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":4},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":3},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":4},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":4},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":4},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":3},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":2},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":1},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":0},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"11/3/2023","actionAllowed":5},{"id":"63f46dcafbbb2c320ca04003","maxActions":10,"date":"12/3/2023","actionAllowed":10},{"id":"63f46dcafbbb2c320ca04003","maxActions":10,"date":"13/3/2023","actionAllowed":10},{"id":"63fb774573bfeaaf46f429c4","maxActions":10,"date":"18/3/2023","actionAllowed":0},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"18/3/2023","actionAllowed":5},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"18/3/2023","actionAllowed":3},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"18/3/2023","actionAllowed":2},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"18/3/2023","actionAllowed":1},{"id":"63fb774573bfeaaf46f429c3","maxActions":5,"date":"18/3/2023","actionAllowed":0}]}
+{
+    "actions": [
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 4
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 4
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 3
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 2
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 1
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 0
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 4
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 3
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 4
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 4
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 4
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 3
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 2
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 1
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 0
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "11/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "12/3/2023",
+            "actionAllowed": 10
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "13/3/2023",
+            "actionAllowed": 10
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c4",
+            "maxActions": 10,
+            "date": "18/3/2023",
+            "actionAllowed": 0
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "18/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "18/3/2023",
+            "actionAllowed": 3
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "18/3/2023",
+            "actionAllowed": 2
+        },
+        {
+            "id": "63fb774573bfeaaf46f429c3",
+            "maxActions": 5,
+            "date": "18/3/2023",
+            "actionAllowed": 1
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 15
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 14
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 13
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 12
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 11
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 10
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 9
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 8
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 7
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 6
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 4
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 3
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 2
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 1
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 0
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 20
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 19
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 18
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 17
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 1
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": 0
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": null
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04003",
+            "maxActions": 10,
+            "date": "19/3/2023",
+            "actionAllowed": null
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04005",
+            "maxActions": 5,
+            "date": "19/3/2023",
+            "actionAllowed": 5
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04005",
+            "maxActions": 5,
+            "date": "19/3/2023",
+            "actionAllowed": 4
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04005",
+            "maxActions": 5,
+            "date": "19/3/2023",
+            "actionAllowed": 3
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04005",
+            "maxActions": 5,
+            "date": "19/3/2023",
+            "actionAllowed": 2
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04005",
+            "maxActions": 5,
+            "date": "19/3/2023",
+            "actionAllowed": 1
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04005",
+            "maxActions": 5,
+            "date": "19/3/2023",
+            "actionAllowed": 0
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04005",
+            "maxActions": 5,
+            "date": "19/3/2023",
+            "actionAllowed": null
+        },
+        {
+            "id": "63f46dcafbbb2c320ca04005",
+            "maxActions": 5,
+            "date": "19/3/2023",
+            "actionAllowed": null
+        }
+    ]
+}

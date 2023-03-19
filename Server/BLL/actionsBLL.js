@@ -43,11 +43,21 @@ const updateAction = async (id, obj) => {
 const checkMaxActionsById = async id => {
     const date = dateUtil.getDate();
     const actions = await getActionsById(id);
+
+    if (actions.length === 0) {
+        return null; // return null if there are no actions
+    }
+
     const actionsByDate = actions.filter(action => action.date === date);
+    if (actionsByDate.length === 0) {
+        return null; // return null if there are no actions for today
+    }
+
     const len = actionsByDate.length - 1;
     if (actionsByDate[len].actionAllowed > 1) {
         return actionsByDate[len];
     }
+
     return "No More Actions for today";
 };
 

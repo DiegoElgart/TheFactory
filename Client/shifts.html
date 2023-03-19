@@ -65,6 +65,7 @@
                         headers: { "Content-Type": "application/json", "access-Token": sessionStorage.getItem('accessToken') },
                         body: JSON.stringify(obj),
                     })
+
                     const data = await resp.json();
 
                     window.location = './shifts.html'
@@ -74,6 +75,7 @@
             }
             async function buildTableFromURL() {
                 const response = await fetch(shiftUrl, options);
+                if (response.status === 401) logout()
                 const data = await response.json();
                 const tableBody = document.getElementById('table-body');
 
